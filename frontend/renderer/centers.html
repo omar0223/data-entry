@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SEMIS Dashboard</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div id="navbar"></div>
+<div class="d-flex">
+    <div id="menu"></div>
+    <div class="content p-3">
+        <div id="page-content"></div>
+    </div>
+</div>
+<div id="footer"></div>
+
+<script>
+    $(document).ready(function () {
+        $('#navbar').load('common/navbar.html');
+        $('#menu').load('common/menu.html');
+        $('#footer').load('common/footer.html');
+        $('#page-content').load('dashboard.html');
+
+        $('.nav-link').on('click', function (e) {
+            e.preventDefault();
+            let page = $(this).attr('href');
+            $('#page-content').load(page);
+        });
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
