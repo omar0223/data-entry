@@ -8,13 +8,22 @@ function createWindow() {
         width: 1200,
         height: 800,
         webPreferences: {
+            contextIsolation: true,  // Important for security
+            enableRemoteModule: false, // Ensure proper Electron security
             nodeIntegration: false,
-            contextIsolation: true,
             preload: path.join(__dirname, 'preload.js'),
         }
     });
 
-    mainWindow.loadFile('renderer/index.html');
+    mainWindow.loadFile(path.join(__dirname, 'renderer/index.html'));
+
+    ipcMain.on('navigate', (event, page) => {
+        fs.readFile(path.join(__dirname, 'renderer', `${page}.html`), 'utf-8', (err, data) => {
+            if (!err) {
+                mainWindow.webContents.executeJavaScript(`document.getElementById(\"page-content\").innerHTML = \`${data}\`;`);
+            }
+        });
+    });
 }
 
 
