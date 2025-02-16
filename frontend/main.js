@@ -15,7 +15,8 @@ function createWindow() {
         }
     });
 
-    mainWindow.loadFile(path.join(__dirname, 'renderer/index.html'));
+    mainWindow.loadFile(path.join(__dirname, 'renderer/login.html'));
+    // mainWindow.loadFile(path.join(__dirname, 'renderer/index.html'));
 
     ipcMain.on('navigate', (event, page) => {
         fs.readFile(path.join(__dirname, 'renderer', `${page}.html`), 'utf-8', (err, data) => {
