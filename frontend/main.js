@@ -10,7 +10,7 @@ function createWindow() {
         webPreferences: {
             contextIsolation: true,  // Important for security
             enableRemoteModule: false, // Ensure proper Electron security
-            nodeIntegration: false,
+            // nodeIntegration: false,
             preload: path.join(__dirname, 'preload.js'),
         }
     });
@@ -18,10 +18,13 @@ function createWindow() {
     mainWindow.loadFile(path.join(__dirname, 'renderer/login.html'));
     // mainWindow.loadFile(path.join(__dirname, 'renderer/index.html'));
 
-    ipcMain.on('navigate', (event, page) => {
-        fs.readFile(path.join(__dirname, 'renderer', `${page}.html`), 'utf-8', (err, data) => {
+    ipcMain.on('navigate', (event, dataPar) => {
+
+        fs.readFile(path.join(__dirname, 'renderer', `${dataPar.page}.html`), 'utf-8', (err, data) => {
             if (!err) {
+                // console.log('Open page');
                 mainWindow.webContents.executeJavaScript(`document.getElementById(\"page-content\").innerHTML = \`${data}\`;`);
+                mainWindow.webContents.send("display-params", dataPar.params);
             }
         });
     });
