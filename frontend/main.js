@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const axios = require('axios');
+const fs = require('fs');
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -15,6 +16,7 @@ function createWindow() {
 
     mainWindow.loadFile('renderer/index.html');
 }
+
 
 // Handle API calls from renderer process
 ipcMain.handle('fetch-data', async (event, endpoint) => {
